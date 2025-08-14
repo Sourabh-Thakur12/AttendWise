@@ -2,6 +2,9 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def main():
@@ -15,6 +18,14 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+
+    # sets port from .env
+    if len(sys.argv)>=2 and sys.argv[1] == "runserver":
+        port = os.getenv('DJANGO_PORT', '8000')
+        if len(sys.argv) == 2:
+            sys.argv.append(port)
+        
+        
     execute_from_command_line(sys.argv)
 
 
