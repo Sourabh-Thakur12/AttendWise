@@ -2,3 +2,7 @@
 todo.md
 node_modules/
 .venv/
+
+
+# env
+.env

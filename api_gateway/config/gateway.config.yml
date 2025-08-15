@@ -1,15 +1,35 @@
 http:
-  port: 8080
+  port: 3000
 admin:
   port: 9876
   host: localhost
 apiEndpoints:
+  js_service: 
+    host: localhost
+    paths: '^/js(/.*)?$'
+  python_service:
+    host: localhost
+    paths: '^/py(/.*)?$'
   api:
     host: localhost
     paths: '/ip'
+
+    
 serviceEndpoints:
+  js_service: 
+    url: 'http://localhost:3001'
+  python_service: 
+    url: 'http://localhost:3002'
   httpbin:
     url: 'https://httpbin.org'
+
+# comman proxy pllicy
+proxy_policy: &proxy_policy
+  -proxy:
+    -action:
+        serviceEndpoint: PLACEHOLDER
+        changeOrigin: true
+
 policies:
   - basic-auth
   - cors
@@ -30,3 +50,31 @@ pipelines:
           - action:
               serviceEndpoint: httpbin 
               changeOrigin: true
+  
+  js_pipeline:
+    apiEndpoints:
+      - js_service
+    policies:
+      - expression:
+          - action:
+              jscode: |
+                // Replace leading /js with /
+                req.url = req.url.replace(/^\/js\/?/, '/');
+      - proxy:
+          - action:
+              serviceEndpoint: js_service
+              changeOrigin: true
+  python_pipeline:
+    apiEndpoints:
+      - python_service
+    policies:
+      - expression:
+        - action:
+            jscode: |
+              // Replace leading /py with /api
+              req.url = req.url.replace(/^\/py\/?/, '/api/');
+
+      - proxy:
+        - action:
+            serviceEndpoint: python_service
+            changeOrigin: true
