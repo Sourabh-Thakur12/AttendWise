@@ -3,3 +3,6 @@ todo.md
 node_modules/
 .venv/
 doc.json/
+
+# env
+.env
