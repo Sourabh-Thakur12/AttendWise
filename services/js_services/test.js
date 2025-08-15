@@ -1,8 +1,13 @@
-const express = require('express')
+// const express = require('express')
+import express from 'express'
+import dotenv from 'dotenv'
 const app = express()
-const port = 3001
+
+dotenv.config()
+
+const port = process.env.PORT
     
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     res.send('Hello from JS Service!')
 })
 
