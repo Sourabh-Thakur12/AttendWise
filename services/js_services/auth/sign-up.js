@@ -19,6 +19,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+import dbConnect from '../dbConnect.js'
 
 dotenv.config()
 
@@ -30,5 +31,8 @@ app.listen(port, (req, res) => {
 })
 
 app.post('/sign-up', async (req, res) => {
+    await dbConnect();
+    
+
     
 })

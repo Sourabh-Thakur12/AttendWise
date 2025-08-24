@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import pgPromise from 'pg-promise';
 
-dotenv.config({ path: 'D:/CODING/Devlopment/PROJECTS/attend_wise/shared/utils/.env' });
+dotenv.config({ path: '../attend_wise/shared/utils/.env' });
 const pgp= pgPromise();
 
 let db = null;
@@ -22,9 +22,13 @@ async function dbConnect(){
                 isConnected = true;
                 console.log("DataBase connected sucessfully")
             });
+
+        
     }catch(error){
         console.log("!Error connecting to the database:: ", error)
     }        
 }
+
+
 
 export default dbConnect;
