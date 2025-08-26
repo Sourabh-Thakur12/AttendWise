@@ -20,6 +20,8 @@ import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import dbConnect from '../dbConnect.js'
+import { userRepo } from './repository/userRepo.js'
+import { signUpSchema } from '../../../shared/schemas/signUpSchema.js'
 
 dotenv.config()
 
@@ -33,6 +35,13 @@ app.listen(port, (req, res) => {
 app.post('/sign-up', async (req, res) => {
     await dbConnect();
     
+    const {name, email, password} = req.body;
 
+    // validate user input
+    try{
+        const user = signUpSchema.parse({name, email, password});
+    } catch(err){
+        return res.json
+    }
     
 })
