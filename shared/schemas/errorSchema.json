@@ -7,10 +7,10 @@
             "properties":{
                 "code": { "type" : "string"},
                 "message": { "type" : "string"},
-                "details": { "type": "object"},
+                "details": { "type": "object"}
             },
         "required": ["code", "message"]
-        },
-        "required": ["success", "error"]
-    }
+        }
+    },
+    "required": ["success", "error"]
 }

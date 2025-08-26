@@ -22,6 +22,8 @@ import bcrypt from 'bcryptjs'
 import dbConnect from '../dbConnect.js'
 import { userRepo } from './repository/userRepo.js'
 import { signUpSchema } from '../../../shared/schemas/signUpSchema.js'
+import { handleError } from '../errorHandler.js'
+import { z } from 'zod'
 
 dotenv.config()
 
@@ -41,7 +43,10 @@ app.post('/sign-up', async (req, res) => {
     try{
         const user = signUpSchema.parse({name, email, password});
     } catch(err){
-        return res.json
+        if(err instanceof z.ZodError){
+            return handleError(false, 400, err.issues)
+        }
+        return handleError(false, 400, err)
     }
     
 })
